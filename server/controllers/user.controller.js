@@ -1,6 +1,6 @@
-import User from '../models/user.model'
-import extend from 'lodash/extend' //JS library of utility functions
-import errorHandler from './error.controller'
+import User from '../models/user.model.js'
+import extend from 'lodash/extend.js' //JS library of utility functions
+//import errorHandler from './error.controller.js'
 
 const create = (req, res, next) => {
 

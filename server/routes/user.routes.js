@@ -1,9 +1,9 @@
-import route from 'color-convert/route'
+//import route from 'color-convert/route'
 import express from 'express'
-import { nextTick } from 'process'
-import userCtrl from '../controllers/user.controller'
-import dbErrorHandler from '../helpers/dbErrorHandler'
-import authCtrl from '../controllers/auth.controller'
+//import { nextTick } from 'process'
+import userCtrl from '../controllers/user.controller.js'
+import dbErrorHandler from '../helpers/dbErrorHandler.js'
+import authCtrl from '../controllers/auth.controller.js'
 
 //----------------------------------------------------- Functions -----------------------------------------------------//
 const create = async (req, res) => {
