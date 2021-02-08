@@ -28,6 +28,8 @@
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
-    "mongoose": "^5.11.13"
+    "mongoose": "^5.11.13",
+    "webpack-dev-middleware": "^4.1.0",
+    "webpack-hot-middleware": "^2.25.0"
   }
 }
