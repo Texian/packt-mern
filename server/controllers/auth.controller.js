@@ -12,9 +12,13 @@ const signin = async (req, res) => {
             return res.status('401').send({ error: "Email and password do not match"})
         }
 
-        const token = jwt.signin({ _id: user._id}, config.jwtSecret)
+        const token = jwt.sign({ 
+            _id: user._id
+        }, config.jwtSecret)
         
-        res.cookie('t', token, { expire: new Date() + 9999 })
+        res.cookie('t', token, { 
+            expire: new Date() + 9999 
+        })
 
         return res.json({
             token,
@@ -39,7 +43,7 @@ const signout = (req, res) => {
 const requireSignin = expressJwt({
     secret: config.jwtSecret,
     userProperty: 'auth',
-    algorithms: ['RS256']
+    algorithms: ['sha1', 'RS256', 'HS256']
 })
 
 const hasAuthorization = (req, res, next) => {
