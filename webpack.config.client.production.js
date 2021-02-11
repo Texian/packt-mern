@@ -1,5 +1,4 @@
-//const path = require('path')
-import path from 'path'
+const path = require('path')
 const CURRENT_WORKING_DIR = process.cwd()
 
 const config = {
@@ -29,6 +28,4 @@ const config = {
     }
 }
 
-export default config
-
-//module.exports = config
+module.exports = config
