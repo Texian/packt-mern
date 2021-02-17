@@ -10,6 +10,12 @@ import Template from '../template.js'
 import userRoutes from './routes/user.routes.js'
 import authRoutes from './routes/auth.routes.js'
 import devBundle from './devBundle.js' //TODO comment out before production build
+import React from 'react'
+import ReactDOMServer from 'react-dom/server.js'
+import StaticRouter from 'react-router-dom/StaticRouter.js'
+import MainRouter from './../client/MainRouter.js'
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles'
+import theme from './../client/theme.js'
 
 const CURRENT_WORKING_DIR = process.cwd()
 const app = express()
@@ -30,30 +36,27 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 app.use('/', userRoutes)
 app.use('/', authRoutes)
 
-app.get('/', (req, res) => {
-    res.status(200).send(Template())
+app.get('*', (req, res) => {
+    const sheets = new ServerStyleSheets()
+    const context ={}
+    const markup = ReactDOMServer.renderToString(
+        sheets.collect(
+            <StaticRouter location={req.url} context={context}>
+                <ThemeProvider theme={theme}>
+                    <MainRouter />
+                </ThemeProvider>
+            </StaticRouter>
+        )
+    )
+    if (context.url) {
+        return res.redirect(303, context.url)
+    }
+    const css = sheets.toString()
+    res.status(200).send(Template({
+        markup: markup,
+        css:css
+    }))
 })
-// app.get('*', (req, res) => {
-//     const sheets = new ServerStyleSheets()
-//     const context ={}
-//     const markup = ReactDOMServer.renderToString(
-//         sheets.collect(
-//             <StaticRouter location={req.url} context={context}>
-//                 <ThemeProvider theme={theme}>
-//                     <MainRouter />
-//                 </ThemeProvider>
-//             </StaticRouter>
-//         )
-//     )
-//     if (context.url) {
-//         return res.redirect(303, context.url)
-//     }
-//     const css = sheets.toString()
-//     res.status(200).send(Template({
-//         markup: markup,
-//         css:css
-//     }))
-// })
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
