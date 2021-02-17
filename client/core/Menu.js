@@ -44,3 +44,5 @@ const Menu = withRouter(({history}) => (
             </Link>
         </Toolbar>
     </AppBar>))
+
+export default Menu
